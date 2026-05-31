@@ -1,0 +1,265 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/options_screen.gd" id="1_opts"]
+[ext_resource type="Texture2D" path="res://images/Estatisticas_bg.png" id="2_bg"]
+
+[node name="OptionsScreen" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_opts")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkOverlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0, 0.0, 0.0, 0.5)
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 60.0
+text = "OPÇÕES"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1.0, 0.3, 0.3, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = -40.0
+offset_bottom = -20.0
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
+
+[node name="MusicMenuRow" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/MusicMenuRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "🎵 Música do Menu"
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.9, 0.8, 0.8, 1)
+
+[node name="MusicMenuSlider" type="HSlider" parent="ScrollContainer/VBox/MusicMenuRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 24)
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicMenuValue" type="Label" parent="ScrollContainer/VBox/MusicMenuRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(45, 0)
+text = "100%"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.7, 0.7, 1)
+
+[node name="MusicGameRow" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/MusicGameRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "🎵 Música do Jogo"
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.9, 0.8, 0.8, 1)
+
+[node name="MusicGameSlider" type="HSlider" parent="ScrollContainer/VBox/MusicGameRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 24)
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicGameValue" type="Label" parent="ScrollContainer/VBox/MusicGameRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(45, 0)
+text = "100%"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.7, 0.7, 1)
+
+[node name="SFXRow" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/SFXRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "🔊 Efeitos Sonoros"
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.9, 0.8, 0.8, 1)
+
+[node name="SFXSlider" type="HSlider" parent="ScrollContainer/VBox/SFXRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 24)
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXValue" type="Label" parent="ScrollContainer/VBox/SFXRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(45, 0)
+text = "100%"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.7, 0.7, 1)
+
+[node name="MasterRow" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/MasterRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "🔈 Volume Geral"
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.9, 0.8, 0.8, 1)
+
+[node name="MasterSlider" type="HSlider" parent="ScrollContainer/VBox/MasterRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 24)
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MasterValue" type="Label" parent="ScrollContainer/VBox/MasterRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(45, 0)
+text = "100%"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.7, 0.7, 1)
+
+[node name="BrightnessRow" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="ScrollContainer/VBox/BrightnessRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "☀ Brilho do Jogo"
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.9, 0.8, 0.8, 1)
+
+[node name="BrightnessSlider" type="HSlider" parent="ScrollContainer/VBox/BrightnessRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 24)
+min_value = 0.2
+max_value = 1.5
+step = 0.05
+value = 1.0
+
+[node name="BrightnessValue" type="Label" parent="ScrollContainer/VBox/BrightnessRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(45, 0)
+text = "100%"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.7, 0.7, 1)
+
+[node name="BrightnessPreview" type="PanelContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+
+[node name="PreviewContent" type="HBoxContainer" parent="ScrollContainer/VBox/BrightnessPreview"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PreviewRect" type="ColorRect" parent="ScrollContainer/VBox/BrightnessPreview/PreviewContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 60)
+color = Color(0.14, 0.11, 0.18, 1)
+
+[node name="PreviewLabel" type="Label" parent="ScrollContainer/VBox/BrightnessPreview/PreviewContent"]
+layout_mode = 2
+text = "Prévia do brilho no jogo.\nAjuste até ficar confortável."
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.75, 0.65, 0.65, 1)
+
+[node name="HSep" type="HSeparator" parent="ScrollContainer/VBox"]
+layout_mode = 2
+modulate = Color(0.5, 0.2, 0.2, 0.6)
+
+[node name="ControlsTitle" type="Label" parent="ScrollContainer/VBox"]
+layout_mode = 2
+text = "🎮 CONTROLES"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1.0, 0.5, 0.5, 1)
+
+[node name="ControlsText" type="Label" parent="ScrollContainer/VBox"]
+layout_mode = 2
+text = "WASD / Setas     →  Mover
+Shift                        →  Correr (Sprint)
+Botão Direito          →  Lanterna
+Escape                    →  Pausar"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.75, 0.75, 1)
+
+[node name="HSep2" type="HSeparator" parent="ScrollContainer/VBox"]
+layout_mode = 2
+modulate = Color(0.5, 0.2, 0.2, 0.6)
+
+[node name="CodeTitle" type="Label" parent="ScrollContainer/VBox"]
+layout_mode = 2
+text = "🔑 CÓDIGO SECRETO"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1.0, 0.5, 0.5, 1)
+
+[node name="CodeRow" type="HBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CodeInput" type="LineEdit" parent="ScrollContainer/VBox/CodeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 34)
+placeholder_text = "Digite o código..."
+secret = true
+theme_override_font_sizes/font_size = 14
+
+[node name="CodeButton" type="Button" parent="ScrollContainer/VBox/CodeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(90, 34)
+text = "Ativar"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.9, 0.75, 0.75, 1)
+
+[node name="CodeFeedback" type="Label" parent="ScrollContainer/VBox"]
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 13
+
+[node name="HSep3" type="HSeparator" parent="ScrollContainer/VBox"]
+layout_mode = 2
+modulate = Color(0.5, 0.2, 0.2, 0.6)
+
+[node name="BackButton" type="Button" parent="ScrollContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 48)
+text = "←  VOLTAR"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.9, 0.7, 0.7, 1)

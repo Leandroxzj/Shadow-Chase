@@ -1,0 +1,132 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_base.gd" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/creature.tscn" id="3_creature"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/chat_overlay.tscn" id="5_chat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_finish"]
+size = Vector2(50, 100)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_death"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(7000, 32)
+
+[node name="Level03" type="Node2D"]
+script = ExtResource("1_base")
+level_number = 3
+spawn_position = Vector2(100, 500)
+finish_position = Vector2(6000, 500)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="World"]
+position = Vector2(3500, 580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="FloorVisual" type="ColorRect" parent="World/Floor"]
+offset_left = -3500.0
+offset_top = -16.0
+offset_right = 3500.0
+offset_bottom = 16.0
+color = Color(0.08, 0.06, 0.1, 1)
+
+[node name="Platform1" type="StaticBody2D" parent="World"]
+position = Vector2(400, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform1"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform1"]
+offset_left = -55.0
+offset_top = -16.0
+offset_right = 55.0
+offset_bottom = 16.0
+color = Color(0.15, 0.08, 0.15, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="World"]
+position = Vector2(800, 350)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform2"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform2"]
+offset_left = -55.0
+offset_top = -16.0
+offset_right = 55.0
+offset_bottom = 16.0
+color = Color(0.15, 0.08, 0.15, 1)
+
+[node name="Platform3" type="StaticBody2D" parent="World"]
+position = Vector2(1200, 410)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform3"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform3"]
+offset_left = -55.0
+offset_top = -16.0
+offset_right = 55.0
+offset_bottom = 16.0
+color = Color(0.15, 0.08, 0.15, 1)
+
+[node name="Platform4" type="StaticBody2D" parent="World"]
+position = Vector2(1700, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform4"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform4"]
+offset_left = -55.0
+offset_top = -16.0
+offset_right = 55.0
+offset_bottom = 16.0
+color = Color(0.15, 0.08, 0.15, 1)
+
+[node name="Platform5" type="StaticBody2D" parent="World"]
+position = Vector2(2300, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform5"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform5"]
+offset_left = -55.0
+offset_top = -16.0
+offset_right = 55.0
+offset_bottom = 16.0
+color = Color(0.15, 0.08, 0.15, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(100, 500)
+
+[node name="Creature" parent="." instance=ExtResource("3_creature")]
+position = Vector2(-300, 500)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_right = 7500
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
+[node name="FinishArea" type="Area2D" parent="."]
+position = Vector2(6000, 500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishArea"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(3500, 750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+shape = SubResource("WorldBoundaryShape2D_death")
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="ChatOverlay" parent="." instance=ExtResource("5_chat")]
+
+[connection signal="body_entered" from="FinishArea" to="." method="_on_finish_area_entered"]
+[connection signal="body_entered" from="DeathZone" to="Player" method="die"]

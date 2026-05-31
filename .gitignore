@@ -1,0 +1,15 @@
+# Godot
+.godot/
+*.import
+export_presets.cfg
+
+# Backend
+backend/.env
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+
+# Assets (adicione os seus)
+assets/sprites/**/*.png
+assets/audio/**/*.ogg
+assets/fonts/**/*.ttf

@@ -1,0 +1,431 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/maze_level.gd" id="1_maze"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/creature.tscn" id="3_creature"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/chat_overlay.tscn" id="5_chat"]
+
+; Paredes horizontais (chão/teto de corredores)
+[sub_resource type="RectangleShape2D" id="RectShape_h_long"]
+size = Vector2(640, 32)
+
+[sub_resource type="RectangleShape2D" id="RectShape_h_med"]
+size = Vector2(320, 32)
+
+[sub_resource type="RectangleShape2D" id="RectShape_h_short"]
+size = Vector2(160, 32)
+
+; Paredes verticais
+[sub_resource type="RectangleShape2D" id="RectShape_v_tall"]
+size = Vector2(32, 320)
+
+[sub_resource type="RectangleShape2D" id="RectShape_v_med"]
+size = Vector2(32, 160)
+
+[sub_resource type="RectangleShape2D" id="RectShape_v_short"]
+size = Vector2(32, 96)
+
+; Área de chegada
+[sub_resource type="RectangleShape2D" id="RectShape_finish"]
+size = Vector2(60, 60)
+
+; Zona de morte (fundo)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_death"]
+
+[node name="LevelMaze" type="Node2D"]
+script = ExtResource("1_maze")
+level_number = 2
+
+[node name="World" type="Node2D" parent="."]
+
+; ============================================================
+; BORDA EXTERNA DO LABIRINTO
+; ============================================================
+
+; Chão externo (base)
+[node name="FloorOuter" type="StaticBody2D" parent="World"]
+position = Vector2(1280, 560)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/FloorOuter"]
+shape = SubResource("RectShape_h_long")
+[node name="Visual" type="ColorRect" parent="World/FloorOuter"]
+offset_left = -320.0
+offset_top = -16.0
+offset_right = 320.0
+offset_bottom = 16.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+[node name="FloorOuter2" type="StaticBody2D" parent="World"]
+position = Vector2(1920, 560)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/FloorOuter2"]
+shape = SubResource("RectShape_h_long")
+[node name="Visual" type="ColorRect" parent="World/FloorOuter2"]
+offset_left = -320.0
+offset_top = -16.0
+offset_right = 320.0
+offset_bottom = 16.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+; Teto externo (topo)
+[node name="CeilOuter" type="StaticBody2D" parent="World"]
+position = Vector2(1280, 80)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/CeilOuter"]
+shape = SubResource("RectShape_h_long")
+[node name="Visual" type="ColorRect" parent="World/CeilOuter"]
+offset_left = -320.0
+offset_top = -16.0
+offset_right = 320.0
+offset_bottom = 16.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+[node name="CeilOuter2" type="StaticBody2D" parent="World"]
+position = Vector2(1920, 80)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/CeilOuter2"]
+shape = SubResource("RectShape_h_long")
+[node name="Visual" type="ColorRect" parent="World/CeilOuter2"]
+offset_left = -320.0
+offset_top = -16.0
+offset_right = 320.0
+offset_bottom = 16.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+; Parede esquerda
+[node name="WallLeft" type="StaticBody2D" parent="World"]
+position = Vector2(32, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/WallLeft"]
+shape = SubResource("RectShape_v_tall")
+[node name="Visual" type="ColorRect" parent="World/WallLeft"]
+offset_left = -16.0
+offset_top = -160.0
+offset_right = 16.0
+offset_bottom = 160.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+; Parede direita
+[node name="WallRight" type="StaticBody2D" parent="World"]
+position = Vector2(2528, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/WallRight"]
+shape = SubResource("RectShape_v_tall")
+[node name="Visual" type="ColorRect" parent="World/WallRight"]
+offset_left = -16.0
+offset_top = -160.0
+offset_right = 16.0
+offset_bottom = 160.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+; ============================================================
+; PAREDES INTERNAS DO LABIRINTO
+; Labirinto em forma de grade 2D com corredores de ~96px
+; Entrada: esquerda (x=64, y=400)
+; Saída: topo-direita (x=2320, y=160)
+; ============================================================
+
+; --- LINHA 1 (y=240, divisória horizontal superior) ---
+[node name="Wall_H1_A" type="StaticBody2D" parent="World"]
+position = Vector2(480, 240)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H1_A"]
+shape = SubResource("RectShape_h_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_H1_A"]
+offset_left = -160.0
+offset_top = -16.0
+offset_right = 160.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H1_B" type="StaticBody2D" parent="World"]
+position = Vector2(960, 240)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H1_B"]
+shape = SubResource("RectShape_h_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_H1_B"]
+offset_left = -160.0
+offset_top = -16.0
+offset_right = 160.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H1_C" type="StaticBody2D" parent="World"]
+position = Vector2(1600, 240)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H1_C"]
+shape = SubResource("RectShape_h_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_H1_C"]
+offset_left = -160.0
+offset_top = -16.0
+offset_right = 160.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H1_D" type="StaticBody2D" parent="World"]
+position = Vector2(2160, 240)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H1_D"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/Wall_H1_D"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+; --- LINHA 2 (y=400, divisória horizontal do meio) ---
+[node name="Wall_H2_A" type="StaticBody2D" parent="World"]
+position = Vector2(320, 400)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H2_A"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/Wall_H2_A"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H2_B" type="StaticBody2D" parent="World"]
+position = Vector2(720, 400)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H2_B"]
+shape = SubResource("RectShape_h_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_H2_B"]
+offset_left = -160.0
+offset_top = -16.0
+offset_right = 160.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H2_C" type="StaticBody2D" parent="World"]
+position = Vector2(1280, 400)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H2_C"]
+shape = SubResource("RectShape_h_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_H2_C"]
+offset_left = -160.0
+offset_top = -16.0
+offset_right = 160.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H2_D" type="StaticBody2D" parent="World"]
+position = Vector2(1840, 400)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H2_D"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/Wall_H2_D"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_H2_E" type="StaticBody2D" parent="World"]
+position = Vector2(2240, 400)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_H2_E"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/Wall_H2_E"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+; --- PAREDES VERTICAIS INTERNAS ---
+[node name="Wall_V_A" type="StaticBody2D" parent="World"]
+position = Vector2(240, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_A"]
+shape = SubResource("RectShape_v_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_A"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = 80.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_B" type="StaticBody2D" parent="World"]
+position = Vector2(560, 160)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_B"]
+shape = SubResource("RectShape_v_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_B"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = 80.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_C" type="StaticBody2D" parent="World"]
+position = Vector2(800, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_C"]
+shape = SubResource("RectShape_v_tall")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_C"]
+offset_left = -16.0
+offset_top = -160.0
+offset_right = 16.0
+offset_bottom = 160.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_D" type="StaticBody2D" parent="World"]
+position = Vector2(1120, 160)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_D"]
+shape = SubResource("RectShape_v_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_D"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = 80.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_E" type="StaticBody2D" parent="World"]
+position = Vector2(1120, 480)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_E"]
+shape = SubResource("RectShape_v_short")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_E"]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 16.0
+offset_bottom = 48.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_F" type="StaticBody2D" parent="World"]
+position = Vector2(1440, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_F"]
+shape = SubResource("RectShape_v_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_F"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = 80.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_G" type="StaticBody2D" parent="World"]
+position = Vector2(1760, 160)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_G"]
+shape = SubResource("RectShape_v_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_G"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = 80.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_H" type="StaticBody2D" parent="World"]
+position = Vector2(1760, 480)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_H"]
+shape = SubResource("RectShape_v_short")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_H"]
+offset_left = -16.0
+offset_top = -48.0
+offset_right = 16.0
+offset_bottom = 48.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_I" type="StaticBody2D" parent="World"]
+position = Vector2(2080, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_I"]
+shape = SubResource("RectShape_v_tall")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_I"]
+offset_left = -16.0
+offset_top = -160.0
+offset_right = 16.0
+offset_bottom = 160.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+[node name="Wall_V_J" type="StaticBody2D" parent="World"]
+position = Vector2(2400, 320)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall_V_J"]
+shape = SubResource("RectShape_v_med")
+[node name="Visual" type="ColorRect" parent="World/Wall_V_J"]
+offset_left = -16.0
+offset_top = -80.0
+offset_right = 16.0
+offset_bottom = 80.0
+color = Color(0.15, 0.1, 0.18, 1)
+
+; --- BECOS SEM SAÍDA (plataformas extras que bloqueiam) ---
+[node name="DeadEnd_A" type="StaticBody2D" parent="World"]
+position = Vector2(400, 160)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/DeadEnd_A"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/DeadEnd_A"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.18, 0.08, 0.18, 1)
+
+[node name="DeadEnd_B" type="StaticBody2D" parent="World"]
+position = Vector2(1600, 480)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/DeadEnd_B"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/DeadEnd_B"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.18, 0.08, 0.18, 1)
+
+[node name="DeadEnd_C" type="StaticBody2D" parent="World"]
+position = Vector2(2320, 480)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/DeadEnd_C"]
+shape = SubResource("RectShape_h_short")
+[node name="Visual" type="ColorRect" parent="World/DeadEnd_C"]
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+color = Color(0.18, 0.08, 0.18, 1)
+
+; ============================================================
+; MARCADOR DE SAÍDA (brilho verde)
+; ============================================================
+[node name="ExitMarker" type="ColorRect" parent="World"]
+offset_left = 2290.0
+offset_top = 96.0
+offset_right = 2350.0
+offset_bottom = 176.0
+color = Color(0.0, 0.8, 0.2, 0.35)
+
+[node name="ExitLabel" type="Label" parent="World"]
+offset_left = 2280.0
+offset_top = 60.0
+offset_right = 2380.0
+offset_bottom = 90.0
+modulate = Color(0.4, 1.0, 0.4, 1)
+text = "SAÍDA"
+horizontal_alignment = 1
+
+; ============================================================
+; PLAYER, CREATURE, CÂMERA
+; ============================================================
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(80, 400)
+
+[node name="Creature" parent="." instance=ExtResource("3_creature")]
+position = Vector2(-40, 400)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_right = 2600
+limit_top = 0
+limit_bottom = 620
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
+; ============================================================
+; ÁREA DE CHEGADA
+; ============================================================
+[node name="FinishArea" type="Area2D" parent="."]
+position = Vector2(2320, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishArea"]
+shape = SubResource("RectShape_finish")
+
+; ============================================================
+; ZONA DE MORTE
+; ============================================================
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(1280, 700)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+shape = SubResource("WorldBoundaryShape2D_death")
+
+; ============================================================
+; HUD E CHAT
+; ============================================================
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="ChatOverlay" parent="." instance=ExtResource("5_chat")]
+
+[connection signal="body_entered" from="FinishArea" to="." method="_on_finish_area_entered"]
+[connection signal="body_entered" from="DeathZone" to="Player" method="die"]

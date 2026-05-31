@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/stats_screen.gd" id="1_stats"]
+[ext_resource type="Texture2D" path="res://images/Estatisticas_bg.png" id="2_bg"]
+
+[node name="StatsScreen" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_stats")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkOverlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0, 0.0, 0.0, 0.45)
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 30.0
+offset_right = 200.0
+offset_bottom = 75.0
+text = "ESTATÍSTICAS & CONQUISTAS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1.0, 0.3, 0.3, 1)
+
+[node name="HSplit" type="HSplitContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 90.0
+offset_right = -20.0
+offset_bottom = -70.0
+split_offset = 300
+
+[node name="StatsPanel" type="VBoxContainer" parent="HSplit"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatsTitle" type="Label" parent="HSplit/StatsPanel"]
+layout_mode = 2
+text = "📊 Estatísticas"
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1.0, 0.7, 0.3, 1)
+
+[node name="StatsText" type="Label" parent="HSplit/StatsPanel"]
+layout_mode = 2
+text = "Carregando..."
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.85, 0.75, 0.75, 1)
+autowrap_mode = 3
+
+[node name="AchievPanel" type="VBoxContainer" parent="HSplit"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AchievTitle" type="Label" parent="HSplit/AchievPanel"]
+layout_mode = 2
+text = "🏆 Conquistas"
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1)
+
+[node name="AchievList" type="VBoxContainer" parent="HSplit/AchievPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BackButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -55.0
+offset_right = 100.0
+offset_bottom = -15.0
+text = "←  VOLTAR"
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.9, 0.7, 0.7, 1)

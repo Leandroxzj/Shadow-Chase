@@ -1,0 +1,259 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="Vignette" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.6, 0.0, 0.0, 0.0)
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 0
+offset_right = 260.0
+offset_bottom = 80.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TimeLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+text = "Tempo: 0.0s"
+modulate = Color(0.8, 0.8, 0.8, 1)
+
+[node name="DistanceLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+text = "Distância: 0m"
+modulate = Color(0.7, 0.7, 0.7, 1)
+visible = false
+
+[node name="KeyLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+text = "Chaves: ○ ○ ○"
+modulate = Color(1.0, 0.85, 0.2, 1)
+
+[node name="P1Container" type="VBoxContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -130.0
+offset_right = 250.0
+offset_bottom = -12.0
+theme_override_constants/separation = 4
+
+[node name="P1Label" type="Label" parent="P1Container"]
+layout_mode = 2
+text = "👤 P1"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 0.9)
+visible = false
+
+[node name="StaminaContainer" type="HBoxContainer" parent="P1Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StaminaIcon" type="Label" parent="P1Container/StaminaContainer"]
+layout_mode = 2
+text = "⚡"
+theme_override_font_sizes/font_size = 14
+
+[node name="StaminaBar" type="ProgressBar" parent="P1Container/StaminaContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 14)
+value = 100.0
+show_percentage = false
+
+[node name="BatteryContainer" type="HBoxContainer" parent="P1Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BatteryIcon" type="Label" parent="P1Container/BatteryContainer"]
+layout_mode = 2
+text = "🔦"
+theme_override_font_sizes/font_size = 14
+
+[node name="BatteryBar" type="ProgressBar" parent="P1Container/BatteryContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 18)
+value = 100.0
+show_percentage = false
+
+[node name="BatteryLabel" type="Label" parent="P1Container/BatteryContainer"]
+layout_mode = 2
+text = "100%"
+theme_override_font_sizes/font_size = 13
+modulate = Color(0.85, 0.85, 0.85, 1)
+
+[node name="SanityContainer" type="HBoxContainer" parent="P1Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SanityIcon" type="Label" parent="P1Container/SanityContainer"]
+layout_mode = 2
+text = "🧠"
+theme_override_font_sizes/font_size = 14
+
+[node name="SanityBar" type="ProgressBar" parent="P1Container/SanityContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 18)
+value = 100.0
+show_percentage = false
+
+[node name="SanityLabel" type="Label" parent="P1Container/SanityContainer"]
+layout_mode = 2
+text = "100%"
+theme_override_font_sizes/font_size = 13
+modulate = Color(0.85, 0.85, 0.85, 1)
+
+[node name="P2Container" type="VBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -130.0
+offset_right = -12.0
+offset_bottom = -12.0
+theme_override_constants/separation = 4
+visible = false
+
+[node name="P2Label" type="Label" parent="P2Container"]
+layout_mode = 2
+text = "👤 P2"
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.5, 0.7, 1.0, 0.9)
+
+[node name="P2StaminaRow" type="HBoxContainer" parent="P2Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="P2StaminaIcon" type="Label" parent="P2Container/P2StaminaRow"]
+layout_mode = 2
+text = "⚡"
+theme_override_font_sizes/font_size = 14
+
+[node name="P2StaminaBar" type="ProgressBar" parent="P2Container/P2StaminaRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 14)
+value = 100.0
+show_percentage = false
+
+[node name="P2BatteryRow" type="HBoxContainer" parent="P2Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="P2BatteryIcon" type="Label" parent="P2Container/P2BatteryRow"]
+layout_mode = 2
+text = "🔦"
+theme_override_font_sizes/font_size = 14
+
+[node name="P2BatteryBar" type="ProgressBar" parent="P2Container/P2BatteryRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 18)
+value = 100.0
+show_percentage = false
+
+[node name="P2BatteryLabel" type="Label" parent="P2Container/P2BatteryRow"]
+layout_mode = 2
+text = "100%"
+theme_override_font_sizes/font_size = 13
+modulate = Color(0.85, 0.85, 0.85, 1)
+
+[node name="P2SanityRow" type="HBoxContainer" parent="P2Container"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="P2SanityIcon" type="Label" parent="P2Container/P2SanityRow"]
+layout_mode = 2
+text = "🧠"
+theme_override_font_sizes/font_size = 14
+
+[node name="P2SanityBar" type="ProgressBar" parent="P2Container/P2SanityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 18)
+value = 100.0
+show_percentage = false
+
+[node name="P2SanityLabel" type="Label" parent="P2Container/P2SanityRow"]
+layout_mode = 2
+text = "100%"
+theme_override_font_sizes/font_size = 13
+modulate = Color(0.85, 0.85, 0.85, 1)
+
+[node name="HeartLabel" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 52.0
+text = "❤"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.8, 0.1, 0.1, 0.0)
+
+[node name="AchievementPopup" type="PanelContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -80.0
+offset_right = 320.0
+offset_bottom = -12.0
+modulate = Color(1, 1, 1, 0)
+
+[node name="HBox" type="HBoxContainer" parent="AchievementPopup"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="IconLabel" type="Label" parent="AchievementPopup/HBox"]
+layout_mode = 2
+text = "🏆"
+theme_override_font_sizes/font_size = 24
+
+[node name="VBox" type="VBoxContainer" parent="AchievementPopup/HBox"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="AchievementPopup/HBox/VBox"]
+layout_mode = 2
+text = "Conquista Desbloqueada!"
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1)
+
+[node name="NameLabel" type="Label" parent="AchievementPopup/HBox/VBox"]
+layout_mode = 2
+text = "Nome"
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(1.0, 1.0, 1.0, 1)
+
+[node name="WarningLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -40.0
+offset_right = 200.0
+offset_bottom = 40.0
+text = "CORRE!"
+modulate = Color(1, 0.1, 0.1, 0)
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 32

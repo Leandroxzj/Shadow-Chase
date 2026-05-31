@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_base.gd" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/creature.tscn" id="3_creature"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/chat_overlay.tscn" id="5_chat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_finish"]
+size = Vector2(50, 100)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_death"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(6000, 32)
+
+[node name="Level02" type="Node2D"]
+script = ExtResource("1_base")
+level_number = 2
+spawn_position = Vector2(100, 500)
+finish_position = Vector2(5000, 500)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="World"]
+position = Vector2(3000, 580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="FloorVisual" type="ColorRect" parent="World/Floor"]
+offset_left = -3000.0
+offset_top = -16.0
+offset_right = 3000.0
+offset_bottom = 16.0
+color = Color(0.1, 0.08, 0.12, 1)
+
+[node name="Platform1" type="StaticBody2D" parent="World"]
+position = Vector2(500, 440)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform1"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform1"]
+offset_left = -70.0
+offset_top = -16.0
+offset_right = 70.0
+offset_bottom = 16.0
+color = Color(0.18, 0.1, 0.18, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="World"]
+position = Vector2(900, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform2"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform2"]
+offset_left = -60.0
+offset_top = -16.0
+offset_right = 60.0
+offset_bottom = 16.0
+color = Color(0.18, 0.1, 0.18, 1)
+
+[node name="Platform3" type="StaticBody2D" parent="World"]
+position = Vector2(1400, 420)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform3"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform3"]
+offset_left = -60.0
+offset_top = -16.0
+offset_right = 60.0
+offset_bottom = 16.0
+color = Color(0.18, 0.1, 0.18, 1)
+
+[node name="Platform4" type="StaticBody2D" parent="World"]
+position = Vector2(2000, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform4"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="Visual" type="ColorRect" parent="World/Platform4"]
+offset_left = -60.0
+offset_top = -16.0
+offset_right = 60.0
+offset_bottom = 16.0
+color = Color(0.18, 0.1, 0.18, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(100, 500)
+
+[node name="Creature" parent="." instance=ExtResource("3_creature")]
+position = Vector2(-300, 500)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_right = 6500
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
+[node name="FinishArea" type="Area2D" parent="."]
+position = Vector2(5000, 500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishArea"]
+shape = SubResource("RectangleShape2D_finish")
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(3000, 750)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+shape = SubResource("WorldBoundaryShape2D_death")
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="ChatOverlay" parent="." instance=ExtResource("5_chat")]
+
+[connection signal="body_entered" from="FinishArea" to="." method="_on_finish_area_entered"]
+[connection signal="body_entered" from="DeathZone" to="Player" method="die"]

@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/difficulty_select.gd" id="1_diff"]
+
+[node name="DifficultySelect" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_diff")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.04, 0.01, 0.01, 1)
+
+[node name="TitleLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 80.0
+offset_right = 260.0
+offset_bottom = 140.0
+text = "ESCOLHA A DIFICULDADE"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1.0, 0.85, 0.85, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -160.0
+offset_right = 180.0
+offset_bottom = 200.0
+theme_override_constants/separation = 18
+
+[node name="EasyButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 62)
+text = "🟢  FÁCIL  —  3 criaturas  |  3 chaves"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.3, 1.0, 0.4, 1)
+
+[node name="NormalButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 62)
+text = "🟡  MÉDIO  —  4 criaturas  |  5 chaves"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1)
+
+[node name="HardButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 62)
+text = "🔴  DIFÍCIL  —  5 criaturas  |  8 chaves"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1.0, 0.35, 0.2, 1)
+
+[node name="ShadowButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 62)
+text = "💀  SOMBRA  —  10 criaturas  |  13 chaves"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.75, 0.3, 1.0, 1)
+
+[node name="EndlessButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 62)
+text = "♾  ENDLESS  —  Sobreviva o máximo possível"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1.0, 0.5, 0.1, 1)
+
+[node name="BackButton" type="Button" parent="VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 48)
+text = "←  VOLTAR"
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.8, 0.7, 0.7, 1)
